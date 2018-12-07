@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:XF.Service.FloatingView.Converters"
+             x:Class="XF.Service.FloatingView.Views.MainPage" 
+             Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"></converters:InverseBoolConverter>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+        <Label Text="Floating View" />
+        <Button Text="Second Page" Command="{Binding NavigateCommand}" CommandParameter="SecondPage" />
+        <Button Text="Third Page" Command="{Binding NavigateCommand}" CommandParameter="ThirdPage"  />
+    </StackLayout>
+</ContentPage>
