@@ -10,7 +10,7 @@ using XF.Service.FloatingView.Droid.Services;
 
 namespace XF.Service.FloatingView.Droid
 {
-    [Activity(Label = "XF.Service.FloatingView", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Floating View", Icon = "@mipmap/fv", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private Intent _serviceIntent;
