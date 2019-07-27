@@ -43,8 +43,8 @@ namespace XF.Service.FloatingView.Droid.Services
 
         private void CreateFloatingIcon()
         {
-            WindowManagerLayoutParams layoutParams = new WindowManagerLayoutParams(WindowManagerLayoutParams.WrapContent,
-                                                                                    WindowManagerLayoutParams.WrapContent,
+            WindowManagerLayoutParams layoutParams = new WindowManagerLayoutParams(ViewGroup.LayoutParams.WrapContent,
+                                                                                    ViewGroup.LayoutParams.WrapContent,
                                                                                     WindowManagerTypes.ApplicationOverlay,
                                                                                     WindowManagerFlags.NotFocusable | WindowManagerFlags.WatchOutsideTouch | WindowManagerFlags.NotTouchModal,
                                                                                     Android.Graphics.Format.Translucent);
@@ -65,68 +65,9 @@ namespace XF.Service.FloatingView.Droid.Services
 
             var view = _frameLayout.FindViewById<ImageView>(Resource.Id.FloatingIcon);
 
-            //view.SetOnTouchListener(new MyTouchListener(Android.App.Application.Context));
             view.SetOnClickListener(new MyClickListener(Android.App.Application.Context));
 
             _windowManager.AddView(_frameLayout, layoutParams);
-        }
-    }
-
-    public class MyTouchListener : Java.Lang.Object, Android.Views.View.IOnTouchListener
-    {
-        Context _currentContext;
-        float dX;
-        float dY;
-
-        float lastdX;
-        float lastdY;
-
-        MotionEventActions lastAction;
-
-        public MyTouchListener(Context context)
-        {
-            _currentContext = context;
-        }
-
-        public bool OnTouch(Android.Views.View v, MotionEvent e)
-        {
-
-            switch (e.ActionMasked)
-            {
-                case MotionEventActions.Down:
-                    lastdX = dX = v.GetX() - e.RawX;
-                    lastdY = dY = v.GetY() - e.RawY;
-                    lastAction = MotionEventActions.Down;
-                    break;
-
-                case MotionEventActions.Move:
-                    v.SetY(e.RawY + dY);
-                    v.SetX(e.RawX + dX);
-
-                    lastdX = e.RawX + dX;
-                    lastdY = e.RawY + dY;
-
-                    lastAction = MotionEventActions.Move;
-                    break;
-
-                case MotionEventActions.Up:
-                    if (lastAction == MotionEventActions.Down)
-                    {
-                        var currentX = v.GetX() - e.RawX;
-                        var currentY = v.GetY() - e.RawY;
-
-                        if (currentX == lastdX && currentY == lastdY)
-                        {
-                            v.CallOnClick();
-                        }
-                    }
-                    //Toast.makeText(DraggableView.this, "Clicked!", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    return false;
-            }
-
-            return true;
         }
     }
 
@@ -141,10 +82,7 @@ namespace XF.Service.FloatingView.Droid.Services
 
         public void OnClick(Android.Views.View v)
         {
-            Toast.MakeText(_currentContext, "Navigating back...", ToastLength.Long).Show();
-
             var broadcaster = new ServiceBroadcaster();
-
             broadcaster.Send();
         }
     }

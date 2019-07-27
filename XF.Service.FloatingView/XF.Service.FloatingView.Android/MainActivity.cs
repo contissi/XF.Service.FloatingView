@@ -6,45 +6,30 @@ using Plugin.CurrentActivity;
 using Prism;
 using Prism.Ioc;
 using XF.Service.FloatingView.Droid.BroadcastReceivers;
-using XF.Service.FloatingView.Droid.Services;
+using XF.Service.FloatingView.Interfaces;
 
 namespace XF.Service.FloatingView.Droid
 {
-    [Activity(Label = "Floating View", Icon = "@mipmap/fv", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Floating View", Icon = "@mipmap/fvicon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        private Intent _serviceIntent;
         private ServiceBroadcaster _serviceReceiver;
-        private const int _reqCodeDrawOverPermission = 1234;
 
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
-            base.OnCreate(bundle);
+            base.OnCreate(savedInstanceState);
 
-            CrossCurrentActivity.Current.Init(this, bundle);
-
-            _serviceIntent = new Intent(this, typeof(FloatingViewService));
+            CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
             RegisterBroadcastReceiver();
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App(new AndroidInitializer()));
         }
 
-        protected override void OnPause()
-        {
-            base.OnPause();
-            RequestDrawOverPermission();
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-            StopService(_serviceIntent);
-        }
 
         protected override void OnDestroy()
         {
@@ -54,11 +39,11 @@ namespace XF.Service.FloatingView.Droid
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
         {
-            if (requestCode == _reqCodeDrawOverPermission)
+            if (requestCode == Services.IntentService.ReqCodeDrawOverPermission)
             {
                 if (Android.Provider.Settings.CanDrawOverlays(this))
                 {
-                    StartService(_serviceIntent);
+                    StartService(Services.IntentService.FloatingViewServiceIntent);
                 }
                 else
                 {
@@ -83,28 +68,6 @@ namespace XF.Service.FloatingView.Droid
         {
             UnregisterReceiver(_serviceReceiver);
         }
-
-        private void RequestDrawOverPermission()
-        {
-            if (Build.VERSION.SdkInt < BuildVersionCodes.M)
-            {
-                StartService(_serviceIntent);
-            }
-            else
-            {
-                if (!Android.Provider.Settings.CanDrawOverlays(this))
-                {
-                    Intent intent = new Intent(Android.Provider.Settings.ActionManageOverlayPermission,
-                            Android.Net.Uri.Parse("package:" + ApplicationContext.PackageName));
-
-                    StartActivityForResult(intent, _reqCodeDrawOverPermission);
-                }
-                else
-                {
-                    StartService(_serviceIntent);
-                }
-            }
-        }
     }
 
     public class AndroidInitializer : IPlatformInitializer
@@ -112,6 +75,7 @@ namespace XF.Service.FloatingView.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.Register<IIntentService, Services.IntentService>();
         }
     }
 }

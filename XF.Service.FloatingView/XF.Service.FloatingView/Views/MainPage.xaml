@@ -2,17 +2,36 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:converters="clr-namespace:XF.Service.FloatingView.Converters"
+             xmlns:prism="http://prismlibrary.com"
              x:Class="XF.Service.FloatingView.Views.MainPage" 
              Title="{Binding Title}">
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:InverseBoolConverter x:Key="InverseBoolConverter"></converters:InverseBoolConverter>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2.5*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height=".5*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackLayout Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+            <Image Source="fv.png" Margin="0,25" />
+        </StackLayout>
+        
+        <StackLayout Grid.Row="1" Grid.Column="0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="Navigate:" />
+            <Button Text="Second Page" Command="{prism:NavigateTo 'SecondPage'}" />
+            <Button Text="Third Page" Command="{prism:NavigateTo 'ThirdPage'}"  />
+        </StackLayout>
+        
+        <StackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+            <Label Text="Overlay:" />
+            <Button Text="Turn On" Command="{Binding StartFloatingViewCommand}" />
+            <Button Text="Turn Off" Command="{Binding StopFloatingViewCommand}" />
+        </StackLayout>
+    </Grid>
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Floating View" />
-        <Button Text="Second Page" Command="{Binding NavigateCommand}" CommandParameter="SecondPage" />
-        <Button Text="Third Page" Command="{Binding NavigateCommand}" CommandParameter="ThirdPage"  />
-    </StackLayout>
 </ContentPage>

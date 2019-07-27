@@ -1,10 +1,7 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
+﻿using System;
+using Prism.Commands;
 using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using XF.Service.FloatingView.Interfaces;
 
 namespace XF.Service.FloatingView.ViewModels
 {
@@ -12,29 +9,32 @@ namespace XF.Service.FloatingView.ViewModels
     {
         #region Private Members
 
-        //private readonly IPlatformService _platformService;
-        private bool _serviceIsRunning;
+        private readonly IIntentService _intentService;
 
         #endregion
 
         #region Properties
 
-        public bool ServiceIsRunning { get => _serviceIsRunning; set => SetProperty(ref _serviceIsRunning, value); }
+
 
         #endregion
 
         #region Commands
 
-        private DelegateCommand<string> _navigateCommand;
-        public DelegateCommand<string> NavigateCommand => _navigateCommand ?? (_navigateCommand = new DelegateCommand<string>(NavigateTo));
+        private DelegateCommand _startFloatingViewCommand;
+        public DelegateCommand StartFloatingViewCommand => _startFloatingViewCommand ?? (_startFloatingViewCommand = new DelegateCommand(StartFloatingView));
+
+        private DelegateCommand _stopFloatingViewCommand;
+        public DelegateCommand StopFloatingViewCommand => _stopFloatingViewCommand ?? (_stopFloatingViewCommand = new DelegateCommand(StopFloatingView));
 
         #endregion
 
         #region Constructor
 
-        public MainPageViewModel(INavigationService navigationService)
+        public MainPageViewModel(INavigationService navigationService, IIntentService intentService)
             : base(navigationService)
         {
+            _intentService = intentService;
             Title = "Main Page";
         }
 
@@ -42,19 +42,14 @@ namespace XF.Service.FloatingView.ViewModels
 
         #region Private Methods
 
-        private async void NavigateTo(string navTarget)
+        private void StartFloatingView()
         {
-            await NavigationService.NavigateAsync(navTarget);
+            _intentService.StartFloatingView();
         }
 
-        private void StartService()
+        private void StopFloatingView()
         {
-            throw new NotImplementedException();
-        }
-
-        private void StopService()
-        {
-            throw new NotImplementedException();
+            _intentService.StopFloatingView();
         }
 
         #endregion
@@ -65,7 +60,7 @@ namespace XF.Service.FloatingView.ViewModels
         {
             base.OnNavigatedTo(parameters);
 
-            //ServiceIsRunning = _platformService.IsFloatingServiceRunning();
+            _intentService.AskForDrawOverPermission();
         }
 
         #endregion
