@@ -26,7 +26,10 @@ namespace XF.Service.FloatingView.Droid.BroadcastReceivers
         public override void OnReceive(Context context, Intent intent)
         {
             Intent selfIntent = new Intent(context, typeof(MainActivity));
-            selfIntent.SetFlags(ActivityFlags.ReorderToFront | ActivityFlags.SingleTop | ActivityFlags.ClearTop);
+            selfIntent.SetFlags(ActivityFlags.ReorderToFront |
+                                ActivityFlags.SingleTop |
+                                ActivityFlags.ClearTop |
+                                ActivityFlags.NewTask);
             context.StartActivity(selfIntent);
         }
     }
