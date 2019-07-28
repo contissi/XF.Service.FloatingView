@@ -23,15 +23,15 @@ namespace XF.Service.FloatingView
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("MainPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
-            containerRegistry.RegisterForNavigation<SecondPage, SecondPageViewModel>();
-            containerRegistry.RegisterForNavigation<ThirdPage, ThirdPageViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<SecondPage>();
+            containerRegistry.RegisterForNavigation<ThirdPage>();
         }
     }
 }

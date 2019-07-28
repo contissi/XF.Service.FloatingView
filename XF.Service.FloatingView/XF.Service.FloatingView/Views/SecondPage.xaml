@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             Title="{Binding Title}"
-             x:Class="XF.Service.FloatingView.Views.SecondPage">
-             
+<base:BaseGradientContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+                              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                              xmlns:base="clr-namespace:XF.Service.FloatingView.Views"
+                              xmlns:prism="http://prismlibrary.com"
+                              x:Class="XF.Service.FloatingView.Views.SecondPage"
+                              GradientStartColor="{StaticResource FVBlue}"
+                              GradientEndColor="{StaticResource FVGreen}"
+                              Title="{Binding Title}">
+
+    <base:BaseGradientContentPage.ToolbarItems>
+        <ToolbarItem Order="Primary" IconImageSource="ic_action_close.png" Command="{prism:GoBack}" />
+    </base:BaseGradientContentPage.ToolbarItems>
+
     <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Second Page" />
+        <Label Text="You are on Page 2!" FontSize="Medium" TextColor="White" />
     </StackLayout>
     
-</ContentPage>
+</base:BaseGradientContentPage>

@@ -12,7 +12,7 @@
     <RootNamespace>XF.Service.FloatingView.Droid</RootNamespace>
     <AssemblyName>XF.Service.FloatingView.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkVersion>v8.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -64,6 +64,9 @@
     <PackageReference Include="Plugin.CurrentActivity">
       <Version>2.1.0.4</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
+      <Version>2.4.11.982</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -72,6 +75,7 @@
     <Compile Include="BroadcastReceivers\ServiceBroadcaster.cs" />
     <Compile Include="Services\FloatingViewService.cs" />
     <Compile Include="Services\IntentService.cs" />
+    <Compile Include="Renderers\BaseGradientContentPageRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -84,12 +88,35 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\layout\FloatingView.axml" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\fvicon.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\fvicon.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\fvicon.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\fvicon.png" />
-    <AndroidResource Include="Resources\mipmap-hdpi\fvicon.png" />
     <AndroidResource Include="Resources\drawable\fv.png" />
+    <AndroidResource Include="Resources\drawable\FVLogo.svg">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\fv_icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\fv_icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-xhdpi\fv_icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-mdpi\fv_icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\mipmap-hdpi\fv_icon.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\ic_action_close.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AndroidManifest.xml" />
@@ -111,6 +138,7 @@
     <Folder Include="BroadcastReceivers\" />
     <Folder Include="Services\" />
     <Folder Include="Resources\drawable\" />
+    <Folder Include="Renderers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

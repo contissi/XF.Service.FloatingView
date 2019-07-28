@@ -10,7 +10,7 @@ using XF.Service.FloatingView.Interfaces;
 
 namespace XF.Service.FloatingView.Droid
 {
-    [Activity(Label = "Floating View", Icon = "@mipmap/fvicon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Floating View", Icon = "@mipmap/fv_icon", Theme = "@style/splashscreen", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         private ServiceBroadcaster _serviceReceiver;
@@ -20,7 +20,11 @@ namespace XF.Service.FloatingView.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            base.SetTheme(Resource.Style.MainTheme);
+
             base.OnCreate(savedInstanceState);
+
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(enableFastRenderer: true);
 
             CrossCurrentActivity.Current.Init(this, savedInstanceState);
 
@@ -41,11 +45,7 @@ namespace XF.Service.FloatingView.Droid
         {
             if (requestCode == Services.IntentService.ReqCodeDrawOverPermission)
             {
-                if (Android.Provider.Settings.CanDrawOverlays(this))
-                {
-                    StartService(Services.IntentService.FloatingViewServiceIntent);
-                }
-                else
+                if (!Android.Provider.Settings.CanDrawOverlays(this))
                 {
                     Android.Widget.Toast.MakeText(Android.App.Application.Context, "Draw over permission is required!", Android.Widget.ToastLength.Long);
                 }

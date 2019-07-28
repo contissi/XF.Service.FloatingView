@@ -11,21 +11,23 @@ namespace XF.Service.FloatingView.ViewModels
 
         private readonly IIntentService _intentService;
 
+        private bool _floatingViewIsActive;
+
         #endregion
 
         #region Properties
 
-
+        public bool FloatingViewIsActive { get => _floatingViewIsActive; set => SetProperty(ref _floatingViewIsActive, value); }
 
         #endregion
 
         #region Commands
 
-        private DelegateCommand _startFloatingViewCommand;
-        public DelegateCommand StartFloatingViewCommand => _startFloatingViewCommand ?? (_startFloatingViewCommand = new DelegateCommand(StartFloatingView));
-
-        private DelegateCommand _stopFloatingViewCommand;
-        public DelegateCommand StopFloatingViewCommand => _stopFloatingViewCommand ?? (_stopFloatingViewCommand = new DelegateCommand(StopFloatingView));
+        private DelegateCommand _toggleFloatingViewCommand;
+        public DelegateCommand ToggleFloatingViewCommand => _toggleFloatingViewCommand ??
+                                                                (_toggleFloatingViewCommand =
+                                                                    new DelegateCommand(ToggleFloatingView, CanExecute)
+                                                                        .ObservesProperty(() => IsBusy));
 
         #endregion
 
@@ -35,21 +37,22 @@ namespace XF.Service.FloatingView.ViewModels
             : base(navigationService)
         {
             _intentService = intentService;
-            Title = "Main Page";
         }
 
         #endregion
 
         #region Private Methods
 
-        private void StartFloatingView()
+        private void ToggleFloatingView()
         {
-            _intentService.StartFloatingView();
-        }
-
-        private void StopFloatingView()
-        {
-            _intentService.StopFloatingView();
+            if (FloatingViewIsActive)
+            {
+                _intentService.StartFloatingView();
+            }
+            else
+            {
+                _intentService.StopFloatingView();
+            }
         }
 
         #endregion

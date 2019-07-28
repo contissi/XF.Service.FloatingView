@@ -1,6 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:prism="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms" x:Class="XF.Service.FloatingView.App">
     <Application.Resources>
+
         <!-- Application resource dictionary -->
+        <Color x:Key="FVBlue">#5469E5</Color>
+        <Color x:Key="FVGreen">#46FF8E</Color>
+
+        <Style x:Key="PillButton" TargetType="Button">            <Setter Property="FontSize" Value="Medium" />            <Setter Property="TextColor" Value="White" />            <Setter Property="BackgroundColor" Value="{StaticResource FVBlue}" />            <Setter Property="CornerRadius" Value="25" />            <Setter Property="HeightRequest" Value="50" />            <Setter Property="WidthRequest" Value="250" />        </Style>
+
     </Application.Resources>
 </prism:PrismApplication>

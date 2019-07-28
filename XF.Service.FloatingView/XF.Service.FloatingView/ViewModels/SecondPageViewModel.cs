@@ -7,7 +7,7 @@ namespace XF.Service.FloatingView.ViewModels
         public SecondPageViewModel(INavigationService navigationService) 
             : base(navigationService)
         {
-            Title = "Second Page";
+            Title = "Page 2";
         }
     }
 }

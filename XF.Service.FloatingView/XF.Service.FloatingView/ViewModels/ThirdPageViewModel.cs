@@ -7,7 +7,7 @@ namespace XF.Service.FloatingView.ViewModels
         public ThirdPageViewModel(INavigationService navigationService) 
             : base(navigationService)
         {
-            Title = "Third Page";
+            Title = "Page 3";
         }
     }
 }

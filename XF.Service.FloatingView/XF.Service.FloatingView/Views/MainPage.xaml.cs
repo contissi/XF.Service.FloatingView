@@ -2,7 +2,7 @@
 
 namespace XF.Service.FloatingView.Views
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : BaseGradientContentPage
     {
         public MainPage()
         {
