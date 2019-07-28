@@ -1,2 +1,2 @@
-# XF.Service.FloatingView
-Xamarin Forms demo application highlighting the ability to draw over other running applications.
+# Floating View (demo app)
+Xamarin Forms demo application demonstrating the ability to draw over other running applications.
